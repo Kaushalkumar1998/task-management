@@ -167,7 +167,7 @@ export const updateUser = async (actor, userId, payload) => {
   const isSelf = String(actor._id) === String(targetUser._id);
   const isTeamMember = String(targetUser.teamLeadId) === String(actor._id);
   const canUpdate =
-    (actor.role === ROLES.MANAGER && targetUser.role !== ROLES.MANAGER) ||
+    actor.role === ROLES.MANAGER ||
     (actor.role === ROLES.TEAM_LEAD && targetUser.role === ROLES.EMPLOYEE && isTeamMember) ||
     (actor.role === ROLES.EMPLOYEE && isSelf);
 

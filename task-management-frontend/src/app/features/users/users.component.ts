@@ -121,7 +121,13 @@ export class UsersComponent implements OnInit {
         : this.userService.createUser(payload);
 
       request.subscribe({
-        next: () => this.loadUsers(),
+        next: (response) => {
+          if (user && this.getUserId(user) === this.getUserId(this.user()!)) {
+            this.authService.updateCurrentUser(response.data);
+          }
+
+          this.loadUsers();
+        },
         error: (error) => this.errorMessage.set(error.error?.message || 'Unable to save user'),
       });
     });
@@ -140,7 +146,7 @@ export class UsersComponent implements OnInit {
     const currentUser = this.user();
 
     if (!currentUser) return false;
-    if (currentUser.role === 'MANAGER') return targetUser.role !== 'MANAGER';
+    if (currentUser.role === 'MANAGER') return true;
     if (currentUser.role === 'TEAM_LEAD') {
       return targetUser.role === 'EMPLOYEE' && String(targetUser.teamLeadId) === this.getUserId(currentUser);
     }
