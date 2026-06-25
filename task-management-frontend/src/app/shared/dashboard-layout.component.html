@@ -1,0 +1,59 @@
+<mat-sidenav-container class="dashboard" autosize>
+  <mat-sidenav
+    #drawer
+    class="sidebar"
+    [class.collapsed]="isSidebarCollapsed() && !isHandset()"
+    [mode]="isHandset() ? 'over' : 'side'"
+    [opened]="!isHandset()"
+  >
+    <div class="brand px-3 py-4">
+      <div class="d-flex align-items-center gap-2">
+        <mat-icon color="primary">task_alt</mat-icon>
+        @if (!isSidebarCollapsed() || isHandset()) {
+          <strong>Task Manager</strong>
+        }
+      </div>
+      @if (!isSidebarCollapsed() || isHandset()) {
+        <small>{{ user()?.role }}</small>
+      }
+    </div>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/tasks" routerLinkActive="active" matTooltip="Dashboard">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        @if (!isSidebarCollapsed() || isHandset()) {
+          <span matListItemTitle>Dashboard</span>
+        }
+      </a>
+      <a mat-list-item routerLink="/users" routerLinkActive="active" matTooltip="Users">
+        <mat-icon matListItemIcon>group</mat-icon>
+        @if (!isSidebarCollapsed() || isHandset()) {
+          <span matListItemTitle>Users</span>
+        }
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="toolbar">
+      <button
+        mat-icon-button
+        type="button"
+        [matTooltip]="isHandset() ? 'Open menu' : 'Collapse menu'"
+        (click)="isHandset() ? drawer.toggle() : toggleSidebar()"
+      >
+        <mat-icon>{{ isHandset() ? 'menu' : isSidebarCollapsed() ? 'menu_open' : 'menu' }}</mat-icon>
+      </button>
+      <span>{{ title() }}</span>
+      <span class="spacer"></span>
+      <span class="user-name d-none d-sm-inline">{{ user()?.username }}</span>
+      <button mat-icon-button type="button" matTooltip="Logout" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <main class="container-fluid p-3 p-md-4">
+      <ng-content />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

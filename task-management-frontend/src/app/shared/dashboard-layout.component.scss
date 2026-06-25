@@ -1,0 +1,51 @@
+.dashboard {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.sidebar {
+  width: 248px;
+  border-right: 1px solid #e5e7eb;
+  transition: width 180ms ease;
+}
+
+.sidebar.collapsed {
+  width: 76px;
+}
+
+.brand {
+  min-height: 98px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.brand small {
+  display: block;
+  margin-top: 4px;
+  color: #64748b;
+}
+
+.active {
+  background: #eef2ff;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.user-name {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+@media (max-width: 991px) {
+  .sidebar,
+  .sidebar.collapsed {
+    width: 248px;
+  }
+}

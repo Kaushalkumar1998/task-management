@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>{{ isEdit() ? 'Edit task' : 'Add task' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="d-grid gap-2 pt-2">
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" />
+      @if (form.controls.title.touched && form.controls.title.invalid) {
+        <mat-error>Title must be 3 to 120 characters.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput rows="4" formControlName="description"></textarea>
+      @if (form.controls.description.touched && form.controls.description.invalid) {
+        <mat-error>Description cannot exceed 2000 characters.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="PENDING">Pending</mat-option>
+        <mat-option value="IN_PROGRESS">In progress</mat-option>
+        <mat-option value="COMPLETED">Completed</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    @if (data.canAssign) {
+      <mat-form-field appearance="outline">
+        <mat-label>Assign to</mat-label>
+        <mat-select formControlName="assignedTo">
+          <mat-option value="">Self</mat-option>
+          @for (userOption of data.users; track getUserId(userOption)) {
+            <mat-option [value]="getUserId(userOption)">
+              {{ userOption.username }} - {{ userOption.role }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close type="button">Cancel</button>
+  <button mat-flat-button color="primary" type="button" (click)="save()">
+    <mat-icon>{{ isEdit() ? 'save' : 'add_task' }}</mat-icon>
+    {{ isEdit() ? 'Update' : 'Create' }}
+  </button>
+</mat-dialog-actions>
