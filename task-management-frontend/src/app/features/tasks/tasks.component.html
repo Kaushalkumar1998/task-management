@@ -62,12 +62,22 @@
 
                 <ng-container matColumnDef="assignedTo">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Assigned</th>
-                  <td mat-cell *matCellDef="let task">{{ task.assignedTo.username }}</td>
+                  <td mat-cell *matCellDef="let task">
+                    <div class="fw-semibold">{{ task.assignedTo.username | titlecase }}</div>
+                    <div class="small text-secondary">
+                      {{ task.assignedTo.role.replace('_', ' ') | titlecase }}
+                    </div>
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="createdBy">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Created by</th>
-                  <td mat-cell *matCellDef="let task">{{ task.createdBy.username }}</td>
+                  <td mat-cell *matCellDef="let task">
+                    <div class="fw-semibold">{{ task.createdBy.username }}</div>
+                    <div class="small text-secondary">
+                      {{ task.createdBy.role.replace('_', ' ') | titlecase }}
+                    </div>
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="updatedAt">
