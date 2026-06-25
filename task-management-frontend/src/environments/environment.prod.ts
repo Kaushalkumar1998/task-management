@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  API_URL: 'https://your-production-api.example.com/api',
+  API_URL: 'https://kaushal-task-management-api.onrender.com/api',
 };
